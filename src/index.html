@@ -4,19 +4,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="shortcut icon" href="img/icons/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+    <link rel="shortcut icon" href="/img/icons/fa-ic.svg" />
     <link rel="stylesheet" href="css/style.min.css">
     <title>Мацаков В.А. - ТЗ HTML-верстальщик</title>
 </head>
 
 <body>
-    <section class="section">
+    <div class="first-section">
         <div class="container">
 
+            <button class="first-section__burger burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="first-section__logo logo">
+                <img src="/img/icons/logo.svg" alt="logo">
+            </div>
+
+            <div class="first-section__scroll-btn">
+                <button class="scroll-btn">Листайте вниз </button>
+                <span></span>
+            </div>
 
         </div>
-    </section>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal-section">
+        <div class="modal-section modal-section_decor">
+            <div class="container">
+
+                <!-- header -->
+                @@include('templates/header.html')
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    @@include('templates/footer.html')
 
 
 

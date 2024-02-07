@@ -1,73 +1,91 @@
+// Подключаем необходимые модули
 const gulp = require('gulp')
-const browserSync = require('browser-sync') // Автоматическая перезагрузка браузера
-const sass = require('gulp-sass')(require('sass')) // Компиляция SASS/SCSS в CSS
-const cleanCSS = require('gulp-clean-css') // Минификация CSS файлов
-const rename = require('gulp-rename') // Переименование файлов
-const autoprefixer = require('gulp-autoprefixer') // Подключение gulp-autoprefixer
+const browserSync = require('browser-sync').create()
+const sass = require('gulp-sass')(require('sass'))
+const cleanCSS = require('gulp-clean-css')
+const rename = require('gulp-rename')
+const autoprefixer = require('gulp-autoprefixer')
 const rimraf = require('rimraf')
+const fileInclude = require('gulp-file-include')
 
-// Задача для очистки папки dist перед запуском gulp
+// Задача для очистки папки dist
 gulp.task('clean', function (cb) {
 	rimraf('dist/*', cb)
-}) 
+})
 
-// Задача для копирования HTML файлов в dist
+// Задача для обработки HTML файлов с использованием gulp-file-include
 gulp.task('html', function () {
-	return gulp.src('src/*.html').pipe(gulp.dest('dist'))
-})
-
-// Задача для копирования изображений в dist
-gulp.task('images', function () {
-	return gulp.src('src/img/**/*').pipe(gulp.dest('dist/img'))
-})
-
-// Задача для копирования JavaScript файлов в dist
-gulp.task('scripts', function () {
-    return gulp.src('src/js/**/*.js') // Укажите путь к вашим исходным JS файлам
-        .pipe(gulp.dest('dist/js')); // Сохранение JS файлов в dist/js
-});
-
-// Задача 'styles' для обработки стилей
-gulp.task('styles', function () {
 	return gulp
-		.src('src/sass/**/*.+(scss|sass)') // Выбор всех SASS/SCSS файлов
-		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError)) // Компиляция и минификация
-		.pipe(autoprefixer({ cascade: false })) // Добавление вендорных префиксов
-		.pipe(rename({ suffix: '.min', prefix: '' })) // Добавление суффикса .min к имени файла
-		.pipe(cleanCSS({ compatibility: 'ie8' })) // Минификация CSS
-		.pipe(gulp.dest('src/css')) // Сохранение обработанных файлов в src
-		.pipe(gulp.dest('dist/css')) // Копир обработанных файлов в dist
+		.src('src/*.html')
+		.pipe(
+			fileInclude({
+				prefix: '@@',
+				basepath: '@file',
+			})
+		)
+		.pipe(gulp.dest('dist'))
 		.pipe(browserSync.stream())
 })
 
-// Для запуска локального сервера
+// Задача для обработки изображений
+gulp.task('images', function () {
+	return gulp
+		.src('src/img/**/*')
+		.pipe(gulp.dest('dist/img'))
+		.pipe(browserSync.stream())
+})
+
+// Задача для копирования JavaScript файлов
+gulp.task('scripts', function () {
+	return gulp
+		.src('src/js/**/*.js')
+		.pipe(gulp.dest('dist/js'))
+		.pipe(browserSync.stream())
+})
+
+// Задача для обработки SASS/SCSS файлов
+gulp.task('styles', function () {
+	return gulp
+		.src('src/sass/**/*.+(scss|sass)')
+		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+		.pipe(
+			autoprefixer({
+				cascade: false,
+			})
+		)
+		.pipe(
+			rename({
+				suffix: '.min',
+			})
+		)
+		.pipe(cleanCSS({ compatibility: 'ie8' }))
+		.pipe(gulp.dest('dist/css'))
+		.pipe(browserSync.stream())
+})
+
+// Задача для запуска сервера и автообновления страницы
 gulp.task('server', function () {
 	browserSync.init({
 		server: {
-			baseDir: 'src', // Директория для сервера
+			baseDir: 'dist',
 		},
 	})
-
-	// Авто перезагрузка страницы при изменении HTML файлов
-	gulp.watch('src/*.html').on('change', browserSync.reload)
 })
 
-// Для отслеживания изменений в файлах
+// Задача для отслеживания изменений в файлах
 gulp.task('watch', function () {
-	// Отслеживание в SASS/SCSS файлах и запуск задачи 'styles'
-	gulp.watch('src/sass/**/*.+(scss|sass)', gulp.parallel('styles'))
-	// Отслеживание в HTML для автоматической перезагрузки
-	gulp.watch('src/*.html').on('change', browserSync.reload)
-	// Отслеживание в JS
-	gulp.watch('src/js/**/*.js').on('change', browserSync.reload)
+	gulp.watch('src/sass/**/*.+(scss|sass)', gulp.series('styles'))
+	gulp.watch('src/*.html', gulp.series('html'))
+	gulp.watch('src/templates/*.html', gulp.series('html'))
+	gulp.watch('src/js/**/*.js', gulp.series('scripts'))
+	gulp.watch('src/img/**/*', gulp.series('images'))
 })
-
 
 // Задача для сборки проекта
 gulp.task(
 	'build',
-	gulp.series('clean', gulp.parallel('html', 'styles', 'images', 'scripts')) // Добавлено 'scripts'
+	gulp.series('clean', gulp.parallel('html', 'styles', 'scripts', 'images'))
 )
 
-// Запускающая 'watch', 'server', 'styles'
-gulp.task('default', gulp.parallel('watch', 'server', 'styles'))
+// Задача по умолчанию, которая запускает сервер и отслеживание изменений
+gulp.task('default', gulp.parallel('watch', 'server', 'build'))
