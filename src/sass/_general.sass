@@ -1,0 +1,380 @@
+*
+    box-sizing: border-box
+    font-family: 'Inter', sans-serif
+
+a
+    text-decoration: none
+
+img
+    display: block
+    max-width: 100%
+    height: auto
+
+.container
+    max-width: 1194px
+    padding: 0 15px
+    margin: 0 auto
+
+    position: relative
+
+.section
+    min-height: 100vh
+    background: url(../img/main-bg.svg) center -2px/contain no-repeat,linear-gradient(153deg,#36603e 35.82%,#1e262c 107.75%)
+    padding-top: 34.55px
+    padding-bottom: 50px
+
+/* Шапка */
+.header
+    display: flex
+    align-items: center
+    justify-content: space-between
+
+    height: 39px
+    margin-bottom: 46.5px
+
+    &__wrapper
+        display: flex
+        align-items: center
+
+    &__logo
+        margin-right: 87.23px
+    &__btn
+        display: flex
+        align-items: center
+        .btn
+            width: 114px
+        .btn_link
+            margin-right: 13.82px
+            width: auto
+
+.nav-list
+    display: flex
+    align-items: center
+    li
+        margin-right: 48.36px
+        a
+            color: rgba(255, 255, 255, 0.80)
+            font-size: 12.091px
+            font-style: normal
+            font-weight: 400
+            line-height: 128.023%
+            transition: .3s
+            &:hover
+                font-weight: 600
+                color: #fff
+        .active
+            font-weight: 600
+            color: #fff
+
+/* Бургер */
+.burger
+    display: none
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    background: none
+    border: none
+    width: 30px
+    height: 30px
+    margin-left: 20px
+    position: relative
+    z-index: 9
+    cursor: pointer
+
+    span
+        display: block
+        width: 30px
+        height: 3px
+        background: #fff
+        margin-bottom: 6px
+        border-radius: 8px
+        transition: .3s
+        &:last-child
+            margin-bottom: 0
+    &_active
+        span
+            margin-bottom: -1.5px
+            background: $btn
+            &:nth-child(1)
+                transform: rotate(45deg)
+            &:nth-child(2)
+                width: 0
+                height: 0
+            &:nth-child(3)
+                transform: rotate(-45deg)
+
+/* Кнопки */
+.btn
+    border-radius: 7px
+    border: 0.864px solid #D66567
+    background: $btn
+
+    height: 39px
+    padding: 8.636px 13.818px
+
+    color: #fff
+    font-size: 12px
+    font-style: normal
+    font-weight: 500
+    line-height: 128.023%
+
+    cursor: pointer
+
+    display: flex
+    align-items: center
+    justify-content: center
+    position: relative
+    transition: .3s
+    &_blick
+        overflow: hidden
+        &::before
+            content: ""
+            position: absolute
+            top: -57%
+            left: -50%
+            width: 20%
+            height: 220%
+            background: rgba(255,255,255,.5)
+            box-shadow: 0 0 20px 10px rgba(255,255,255,.5)
+            transform: rotate(45deg)
+            pointer-events: none
+            animation: shineEffect 4s infinite
+        &_2
+            &::before
+                width: 10%
+                animation: shineEffect2 4s infinite
+
+    &:hover
+        background: $black
+        border: 0.864px solid #D66567
+
+    &_link
+        border: none
+        background: none
+        width: auto
+        padding: 0
+
+        &:hover
+            background: none
+            border: none
+            font-weight: 600
+
+    &_cart
+        border: 0.864px solid #D0D0D0
+        background: #fff0
+        box-shadow: 0px 6px 14px 0px rgba(0, 0, 0, 0.10)
+
+    span
+        color: $btn
+        display: inline-block
+        width: 16px
+        height: 16px
+        border-radius: 65.967px
+        background: rgba(255, 255, 255, 0.60)
+        margin-left: 9.46px
+
+@keyframes shineEffect
+    0%,33%
+        left: -200%
+    100%
+        left: 200%
+
+@keyframes shineEffect2
+    0%,33%
+        left: -100%
+    100%
+        left: 300%
+
+/* Моб меню */
+.mob-menu
+    opacity: 0
+    visibility: hidden
+    width: 100%
+    height: 100vh
+    background: #fff
+
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 3
+
+    transition: .4s
+
+    .nav-list
+        display: flex
+        flex-direction: column
+        height: 100%
+        justify-content: center
+        li
+            margin-right: 0
+            margin-bottom: 20px
+            a
+                color: $black
+                font-size: 16px
+
+    &_active
+        opacity: 1
+        visibility: inherit
+
+/* Контент */
+.content
+    h1
+        text-align: center
+        margin-bottom: 68.95px
+    &__cart
+        display: flex
+        align-items: center
+        justify-content: space-between
+        width: 970px
+        margin: 0 auto
+h1
+    color: #FFF
+    font-size: 41.455px
+    font-style: normal
+    font-weight: 600
+    line-height: normal
+
+.cart
+    position: relative
+    display: flex
+    flex-direction: column
+    width: 334px
+    height: 592px
+    padding: 37.848px 60px 52.988px 60px
+
+    border-radius: 11.354px
+    background: $green
+    box-shadow: 0px 3.785px 94.621px 0px rgba(0, 0, 0, 0.25)
+
+    color: #fff
+
+    opacity: 0
+    transition: opacity 1s ease-in-out
+
+    &:nth-child(2)
+        background: $black
+        margin: -50px -20px 0
+        z-index: 1
+
+    &__wrapper
+        &:nth-child(1)
+            height: 164px
+        &:nth-child(2)
+            flex: 2
+            margin-top: 25px
+
+    &__hr
+        border: none
+        height: 1px
+        background: rgba(255, 255, 255, 0.10)
+        margin: 15.14px 0
+        &_big
+            position: absolute
+            top: 186px
+            left: 0
+            width: 100%
+
+    &__name
+        font-size: 16px
+        font-style: normal
+        font-weight: 600
+        line-height: normal
+        line-height: 1
+        margin-bottom: 15.14px
+    &__text
+        color: rgba(255, 255, 255, 0.80)
+        font-size: 12px
+        font-style: normal
+        font-weight: 400
+        line-height: 140%
+
+    &__option
+        font-size: 15.139px
+        font-style: normal
+        font-weight: 600
+        line-height: 128.023%
+
+        margin-bottom: 10px
+    &__option-name
+        font-size: 13.247px
+        font-style: normal
+        font-weight: 500
+        line-height: 128.023%
+
+        margin-bottom: 24px
+
+/* Стоимость */
+.price
+    display: flex
+    &__currency
+        font-size: 11.354px
+        font-style: normal
+        font-weight: 500
+        line-height: 1
+        cursor: pointer
+
+        &::after
+            content: ''
+            display: block
+            max-width: 0
+            height: 1px
+            border-radius: 90px
+            background: #ebebeb
+            transition: .3s
+
+        &:hover
+            &::after
+                max-width: 100%
+    &__sum
+        font-size: 37.848px
+        font-style: normal
+        font-weight: 800
+        line-height: 1
+        margin-right: 5px
+
+    &__term
+        color: rgba(255, 255, 255, 0.70)
+        font-size: 12px
+        font-style: normal
+        font-weight: 400
+        line-height: normal
+
+        display: flex
+        justify-content: end
+        flex-direction: column
+        cursor: pointer
+
+        &::after
+            content: ''
+            display: block
+            max-width: 0
+            height: 1px
+            border-radius: 90px
+            background: #ebebeb
+            transition: .3s
+
+        &:hover
+            &::after
+                max-width: 100%
+
+/* Список в карточке */
+.list
+    &__li
+        display: flex
+        align-items: center
+        font-size: 12px
+        font-style: normal
+        font-weight: 500
+        line-height: 128.023%
+
+        margin-bottom: 15.14px
+        &:before
+            content: ''
+            display: block
+            width: 11px
+            height: 10.364px
+            background: url(../img/icons/arrow-list.svg) center center/contain no-repeat
+            margin-right: 7.57px
+        &_old
+            font-weight: 400
+            color: rgba(255, 255, 255, 0.80)

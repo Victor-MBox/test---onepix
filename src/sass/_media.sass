@@ -1,0 +1,57 @@
+@media (max-width: 1440px)
+    .section
+        background: url(../img/main-bg.svg) center 40px/contain no-repeat,linear-gradient(153deg,#36603e 35.82%,#1e262c 107.75%)
+
+/* @media (max-width: 1200px) */
+
+@media (max-width: 1024px)
+    .section
+        padding-bottom: 50px
+    .header
+        &__logo
+            margin-right: 40px
+
+    .nav-list
+        li
+            margin-right: 30px
+
+    .content
+        &__cart
+            width: 748px
+    .cart
+        width: 258px
+        padding: 30px 26px 30px 26px
+        &__wrapper:nth-child(2)
+            margin-bottom: 20px
+
+@media (max-width: 768px)
+    .section
+        height: auto
+
+    .header
+        &__nav
+            display: none
+        &__logo
+            margin-right: 10px
+    .burger
+        display: flex
+
+    .content
+        h1
+            font-size: 30px
+            margin-bottom: 30px
+        &__cart
+            width: auto
+            display: block
+    .cart
+        width: 100%
+        height: auto
+        padding: 37.848px 60px 52.988px 60px
+        &:nth-child(2)
+            margin: 20px 0
+
+@media (max-width: 480px)
+    .cart
+        padding: 37.848px 20px 52.988px 20px
+
+/* @media (max-width: 380px) */ 
